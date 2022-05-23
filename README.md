@@ -11,3 +11,5 @@ Note: Not all steam games use the steam API to manage cloud saves. This applicat
 
 This projected is created using the facepunch.steamworks wrapper.
 The wrapper can be found here: https://wiki.facepunch.com/steamworks/
+
+Simple usages guide: https://github.com/opstal-thomas/SteamCloudSaveManager/wiki
