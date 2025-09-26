@@ -2,13 +2,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Decoy {
+namespace TMG {
     /// <summary>
-    /// HookView.cs
+    /// <see cref="HookView"/>
     ///
-    /// Author: Thomas van Opstal
+    /// Author: Thomas van Opstal for Total Mayhem Games
     /// </summary>
     public class HookView : MonoBehaviour {
+
         [SerializeField] private GameObject initializePanel;
         [SerializeField] private SteamController steamController;
         [SerializeField] private TMP_InputField appIdInputfield;
@@ -16,6 +17,7 @@ namespace Decoy {
         [SerializeField] private Button initializeButton;
 
         private void Start() {
+            appIdInputfield.text = steamController.GetStoredSteamAppID();
             steamController.onSteamHook += OnSteamHooked;
             steamController.onSteamUnhooked += OnSteamUnhooked;
             initializeButton.onClick.AddListener(HookToSteam);

@@ -2,11 +2,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Decoy {
+namespace TMG {
     /// <summary>
-    /// SaveFileEntry.cs
+    /// <see cref="SaveFileEntry"/>
     ///
-    /// Author: Thomas van Opstal
+    /// Author: Thomas van Opstal for Total Mayhem Games
     /// </summary>
     public class SaveFileEntry : MonoBehaviour {
         [SerializeField] private Button deleteButton;
