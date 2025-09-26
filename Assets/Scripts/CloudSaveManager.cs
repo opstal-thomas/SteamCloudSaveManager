@@ -1,31 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Decoy {
+namespace TMG {
     /// <summary>
-    /// CloudSaveManager.cs
+    /// <see cref="CloudSaveManager"/>
     ///
-    /// Author: Thomas van Opstal
+    /// Author: Thomas van Opstal for Total Mayhem Games
     /// </summary>
     public class CloudSaveManager : MonoBehaviour {
+
         [SerializeField] private SteamController steamController;
         [SerializeField] private GameObject managementPanel;
         [SerializeField] private GameObject saveGameEntry;
+        [SerializeField] private GameObject noSaveFilesEntry;
         [SerializeField] private RectTransform contentPanel;
         [SerializeField] private Button unhookFromSteamButton;
+        [SerializeField] private Button refreshButton;
 
         private void Start() {
             steamController.onSteamHook += OnSteamHooked;
             steamController.onSteamUnhooked += OnSteamUnhooked;
-            steamController.onSaveFileDeleted += DrawSaveFiles;
+            steamController.onSaveFileDeleted += OnSaveFileDeleted;
             unhookFromSteamButton.onClick.AddListener(steamController.UnhookFromSteam);
+            refreshButton.onClick.AddListener(DrawSaveFiles);
         }
 
         private void OnDestroy() {
             steamController.onSteamHook -= OnSteamHooked;
             steamController.onSteamUnhooked -= OnSteamUnhooked;
-            steamController.onSaveFileDeleted -= DrawSaveFiles;
+            steamController.onSaveFileDeleted -= OnSaveFileDeleted;
             unhookFromSteamButton.onClick.RemoveAllListeners();
+            refreshButton.onClick.RemoveAllListeners();
+        }
+
+        private void OnSaveFileDeleted(bool success) {
+            if (success)
+                DrawSaveFiles();
         }
 
         private void OnSteamHooked(bool success, string error) {
@@ -49,6 +59,10 @@ namespace Decoy {
                 GameObject entry = Instantiate(saveGameEntry, contentPanel);
                 entry.GetComponent<SaveFileEntry>().SetupEntry(file, steamController);
             }
+
+            if (saveFiles.Length == 0)
+                Instantiate(noSaveFilesEntry, contentPanel);
+
         }
     }
 }
